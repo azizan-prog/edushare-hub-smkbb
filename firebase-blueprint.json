@@ -1,0 +1,232 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "Profil guru yang disahkan melalui Google Authentication.",
+      "type": "object",
+      "properties": {
+        "uid": {
+          "type": "string",
+          "description": "Firebase Auth UID guru.",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "name": {
+          "type": "string",
+          "description": "Nama paparan guru.",
+          "minLength": 1,
+          "maxLength": 150
+        },
+        "email": {
+          "type": "string",
+          "format": "email",
+          "description": "Alamat emel rasmi atau Google guru.",
+          "minLength": 3,
+          "maxLength": 200
+        },
+        "photoURL": {
+          "type": "string",
+          "description": "URL gambar profil guru.",
+          "maxLength": 1000
+        },
+        "createdAt": {
+          "type": "integer",
+          "description": "Cap masa penciptaan akaun (epoch ms)."
+        }
+      },
+      "required": ["uid", "name", "email", "createdAt"]
+    },
+    "SubjectItem": {
+      "title": "SubjectItem",
+      "description": "Senarai mata pelajaran kurikulum sekolah menengah Malaysia.",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "ID ringkas mata pelajaran.",
+          "minLength": 1,
+          "maxLength": 64,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "name": {
+          "type": "string",
+          "description": "Nama penuh mata pelajaran.",
+          "minLength": 2,
+          "maxLength": 120
+        },
+        "code": {
+          "type": "string",
+          "description": "Kod ringkas mata pelajaran.",
+          "minLength": 1,
+          "maxLength": 20
+        },
+        "active": {
+          "type": "boolean",
+          "description": "Status aktif mata pelajaran."
+        }
+      },
+      "required": ["id", "name", "code", "active"]
+    },
+    "ResourceItem": {
+      "title": "ResourceItem",
+      "description": "Metadata bahan pengajaran dan penggantian masa instruksional (MMI).",
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string",
+          "description": "Tajuk bahan MMI.",
+          "minLength": 3,
+          "maxLength": 250
+        },
+        "description": {
+          "type": "string",
+          "description": "Penerangan dan panduan pelaksanaan guru pengganti.",
+          "minLength": 5,
+          "maxLength": 3000
+        },
+        "subjectId": {
+          "type": "string",
+          "description": "ID mata pelajaran.",
+          "minLength": 1,
+          "maxLength": 64
+        },
+        "subjectName": {
+          "type": "string",
+          "description": "Nama mata pelajaran.",
+          "minLength": 1,
+          "maxLength": 120
+        },
+        "form": {
+          "type": "string",
+          "description": "Tingkatan sasaran murid.",
+          "enum": ["Tingkatan 1", "Tingkatan 2", "Tingkatan 3", "Tingkatan 4", "Tingkatan 5"]
+        },
+        "category": {
+          "type": "string",
+          "description": "Kategori digital atau bukan digital.",
+          "enum": ["digital", "bukan_digital"]
+        },
+        "resourceType": {
+          "type": "string",
+          "description": "Jenis format fail atau pautan.",
+          "enum": ["PDF", "DOCX", "PPTX", "XLSX", "Imej", "Video", "Pautan Luar"]
+        },
+        "fileName": {
+          "type": "string",
+          "description": "Nama fail asal.",
+          "maxLength": 260
+        },
+        "fileUrl": {
+          "type": "string",
+          "description": "URL muat turun fail daripada Firebase Storage.",
+          "maxLength": 2000
+        },
+        "storagePath": {
+          "type": "string",
+          "description": "Laluan storan dalam Firebase Storage.",
+          "maxLength": 500
+        },
+        "externalUrl": {
+          "type": "string",
+          "description": "Pautan luar seperti Google Drive, YouTube, Quizizz, atau Google Forms.",
+          "maxLength": 2000
+        },
+        "fileSizeBytes": {
+          "type": "integer",
+          "description": "Saiz fail dalam bait."
+        },
+        "ownerUid": {
+          "type": "string",
+          "description": "UID guru penyumbang.",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "ownerName": {
+          "type": "string",
+          "description": "Nama guru penyumbang.",
+          "minLength": 1,
+          "maxLength": 150
+        },
+        "ownerEmail": {
+          "type": "string",
+          "description": "Emel guru penyumbang.",
+          "maxLength": 200
+        },
+        "createdAt": {
+          "type": "integer",
+          "description": "Cap masa penciptaan (epoch ms)."
+        },
+        "updatedAt": {
+          "type": "integer",
+          "description": "Cap masa kemas kini terakhir (epoch ms)."
+        },
+        "status": {
+          "type": "string",
+          "description": "Status penerbitan bahan.",
+          "enum": ["published", "archived"]
+        },
+        "downloadCount": {
+          "type": "integer",
+          "description": "Bilangan muat turun/akses bahan."
+        }
+      },
+      "required": [
+        "title",
+        "description",
+        "subjectId",
+        "subjectName",
+        "form",
+        "category",
+        "resourceType",
+        "ownerUid",
+        "ownerName",
+        "createdAt",
+        "updatedAt",
+        "status",
+        "downloadCount"
+      ]
+    },
+    "DownloadRecord": {
+      "title": "DownloadRecord",
+      "description": "Rekod aktiviti muat turun bahan MMI.",
+      "type": "object",
+      "properties": {
+        "resourceId": {
+          "type": "string",
+          "description": "ID dokumen bahan dalam koleksi resources.",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "uid": {
+          "type": "string",
+          "description": "UID pengguna (pilihan jika guru telah log masuk).",
+          "maxLength": 128
+        },
+        "downloadedAt": {
+          "type": "integer",
+          "description": "Cap masa muat turun (epoch ms)."
+        }
+      },
+      "required": ["resourceId", "downloadedAt"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": { "$ref": "#/entities/UserProfile" },
+      "description": "Profil peribadi guru yang log masuk (dilindungi PII, akses pemilik sahaja)."
+    },
+    "/subjects/{subjectId}": {
+      "schema": { "$ref": "#/entities/SubjectItem" },
+      "description": "Senarai mata pelajaran kurikulum sekolah menengah."
+    },
+    "/resources/{resourceId}": {
+      "schema": { "$ref": "#/entities/ResourceItem" },
+      "description": "Koleksi utama bahan MMI yang diterbitkan oleh guru."
+    },
+    "/downloads/{downloadId}": {
+      "schema": { "$ref": "#/entities/DownloadRecord" },
+      "description": "Log rekod muat turun untuk rujukan analitik."
+    }
+  }
+}

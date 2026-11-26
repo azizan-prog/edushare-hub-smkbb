@@ -1,0 +1,6 @@
+{
+  "name": "e-MMI RESOURCE HUB",
+  "description": "Pusat sumber dan perkongsian bahan Menggantikan Masa Instruksional (MMI) bagi sekolah menengah Malaysia (Tingkatan 1 hingga Tingkatan 5).",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

@@ -1,0 +1,26 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+    match /resources/{userId}/{fileName} {
+      // Sesiapa sahaja (termasuk guru pelawat) boleh membaca/muat turun fail MMI
+      allow read: if true;
+
+      // Hanya guru yang log masuk boleh memuat naik fail ke dalam foldernya sendiri
+      // Had saiz fail: 50MB (50 * 1024 * 1024 bait)
+      // Jenis MIME dibenarkan: PDF, Word, PowerPoint, Excel, Gambar, Video
+      allow write: if request.auth != null 
+                   && request.auth.uid == userId
+                   && request.resource.size < 50 * 1024 * 1024
+                   && (
+                     request.resource.contentType.matches('application/pdf') ||
+                     request.resource.contentType.matches('application/vnd.*') ||
+                     request.resource.contentType.matches('application/msword') ||
+                     request.resource.contentType.matches('image/.*') ||
+                     request.resource.contentType.matches('video/.*')
+                   );
+      
+      // Hanya guru pemilik boleh memadam fail fizikal di storan
+      allow delete: if request.auth != null && request.auth.uid == userId;
+    }
+  }
+}

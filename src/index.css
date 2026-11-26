@@ -1,0 +1,14 @@
+@import "tailwindcss";
+
+@layer base {
+  html {
+    font-size: 13.5px;
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    letter-spacing: -0.01em;
+  }
+
+  /* Optimize uppercase readability with refined tracking */
+  .uppercase {
+    letter-spacing: 0.025em;
+  }
+}
